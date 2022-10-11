@@ -43,7 +43,7 @@ module "vpc" {
 }
 
 module "apigee-x-core" {
-  source              = "../../modules/apigee-x-core"
+  source              = "github.com/apigee/terraform-modules//modules/apigee-x-core"
   project_id          = module.project.project_id
   apigee_environments = var.apigee_environments
   ax_region           = var.ax_region
@@ -62,7 +62,7 @@ module "backend-vpc" {
 }
 
 module "backend-example" {
-  source     = "../../modules/development-backend"
+  source     = "github.com/apigee/terraform-modules//modules/development-backend"
   project_id = module.project.project_id
   name       = var.backend_name
   network    = module.backend-vpc.network.id
@@ -80,7 +80,7 @@ resource "google_compute_subnetwork" "psc_nat_subnet" {
 }
 
 module "southbound-psc" {
-  source              = "../../modules/sb-psc-attachment"
+  source              = "github.com/apigee/terraform-modules//modules/apigee-x-coremodules/sb-psc-attachment"
   project_id          = module.project.project_id
   name                = var.psc_name
   region              = var.backend_region

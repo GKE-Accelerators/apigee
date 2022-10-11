@@ -43,14 +43,14 @@ module "vpc" {
 }
 
 module "nip-development-hostname" {
-  source             = "../../modules/nip-development-hostname"
+  source             = "github.com/apigee/terraform-modules//modules/nip-development-hostname"
   project_id         = module.project.project_id
   address_name       = "apigee-external"
   subdomain_prefixes = [for name, _ in var.apigee_envgroups : name]
 }
 
 module "apigee-x-core" {
-  source              = "../../modules/apigee-x-core"
+  source              = "github.com/apigee/terraform-modules//modules/apigee-x-core"
   project_id          = module.project.project_id
   ax_region           = var.ax_region
   apigee_instances    = var.apigee_instances
@@ -74,7 +74,7 @@ module "vpc-ingress" {
 }
 
 module "nb-psc-l7xlb" {
-  source                  = "../../modules/nb-psc-l7xlb"
+  source                  = "github.com/apigee/terraform-modules//modules/apigee-x-coremodules/nb-psc-l7xlb"
   project_id              = module.project.project_id
   name                    = "apigee-xlb-psc"
   network                 = module.vpc.network.id

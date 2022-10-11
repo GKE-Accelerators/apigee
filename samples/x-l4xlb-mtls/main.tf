@@ -49,14 +49,14 @@ module "vpc" {
 }
 
 module "nip-development-hostname" {
-  source             = "../../modules/nip-development-hostname"
+  source             = "github.com/apigee/terraform-modules//modules/apigee-x-coremodules/nip-development-hostname"
   project_id         = module.project.project_id
   address_name       = "apigee-external"
   subdomain_prefixes = [for name, _ in var.apigee_envgroups : name]
 }
 
 module "apigee-x-core" {
-  source              = "../../modules/apigee-x-core"
+  source              = "github.com/apigee/terraform-modules//modules/apigee-x-coremodules/apigee-x-core"
   project_id          = module.project.project_id
   ax_region           = var.ax_region
   apigee_instances    = var.apigee_instances
@@ -72,7 +72,7 @@ module "apigee-x-core" {
 
 module "apigee-x-mtls-mig" {
   for_each      = var.apigee_instances
-  source        = "../../modules/apigee-x-mtls-mig"
+  source        = "github.com/apigee/terraform-modules//modules/apigee-x-coremodules/apigee-x-mtls-mig"
   project_id    = module.project.project_id
   endpoint_ip   = module.apigee-x-core.instance_endpoints[each.key]
   ca_cert_path  = var.ca_cert_path
@@ -97,7 +97,7 @@ resource "google_compute_firewall" "allow_xlb_hc" {
 }
 
 module "mig-l4xlb" {
-  source       = "../../modules/l4xlb"
+  source       = "github.com/apigee/terraform-modules//modules/apigee-x-coremodules/l4xlb"
   project_id   = module.project.project_id
   name         = "apigee-l4xlb"
   backend_migs = [for _, mig in module.apigee-x-mtls-mig : mig.instance_group]

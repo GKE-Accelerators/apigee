@@ -46,7 +46,7 @@ module "vpc" {
 }
 
 module "apigee-x-core" {
-  source              = "../../modules/apigee-x-core"
+  source              = "github.com/apigee/terraform-modules//modules/apigee-x-core"
   project_id          = module.project.project_id
   ax_region           = var.ax_region
   apigee_instances    = var.apigee_instances
@@ -61,7 +61,7 @@ module "apigee-x-core" {
 }
 
 module "routing-appliance" {
-  source           = "../../modules/routing-appliance"
+  source           = "github.com/apigee/terraform-modules//modules/routing-appliance"
   project_id       = module.project.project_id
   name             = var.appliance_name
   network          = module.vpc.name
@@ -104,7 +104,7 @@ module "peering-apigee-backend" {
 }
 
 module "backend-example" {
-  source     = "../../modules/development-backend"
+  source     = "github.com/apigee/terraform-modules//modules/development-backend"
   project_id = module.project.project_id
   name       = var.backend_name
   network    = module.backend-vpc.network.id

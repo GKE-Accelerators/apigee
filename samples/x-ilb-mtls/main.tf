@@ -49,7 +49,7 @@ module "vpc" {
 }
 
 module "apigee-x-core" {
-  source              = "../../modules/apigee-x-core"
+  source              = "github.com/apigee/terraform-modules//modules/apigee-x-core"
   project_id          = module.project.project_id
   apigee_environments = var.apigee_environments
   apigee_envgroups    = var.apigee_envgroups
@@ -60,7 +60,7 @@ module "apigee-x-core" {
 
 module "apigee-x-mtls-mig" {
   for_each      = var.apigee_instances
-  source        = "../../modules/apigee-x-mtls-mig"
+  source        = "github.com/apigee/terraform-modules//modules/apigee-x-mtls-mig"
   project_id    = module.project.project_id
   endpoint_ip   = module.apigee-x-core.instance_endpoints[each.key]
   ca_cert_path  = var.ca_cert_path

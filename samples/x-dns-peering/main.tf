@@ -55,7 +55,7 @@ module "vpc" {
 }
 
 module "apigee-x-core" {
-  source              = "../../modules/apigee-x-core"
+  source              = "github.com/apigee/terraform-modules//modules/apigee-x-core"
   project_id          = module.project.project_id
   apigee_environments = var.apigee_environments
   ax_region           = var.ax_region
@@ -70,7 +70,7 @@ module "apigee-x-core" {
 }
 
 module "backend-example" {
-  source     = "../../modules/development-backend"
+  source     = "github.com/apigee/terraform-modules//modules/development-backend"
   project_id = module.project.project_id
   name       = var.backend.name
   network    = module.vpc.self_link

@@ -49,14 +49,14 @@ module "vpc" {
 }
 
 module "nip-development-hostname" {
-  source             = "../../modules/nip-development-hostname"
+  source             = "github.com/apigee/terraform-modules//modules/apigee-x-coremodules/nip-development-hostname"
   project_id         = module.project.project_id
   address_name       = "apigee-external"
   subdomain_prefixes = [for name, _ in var.apigee_envgroups : name]
 }
 
 module "apigee-x-core" {
-  source              = "../../modules/apigee-x-core"
+  source              = "github.com/apigee/terraform-modules//modules/apigee-x-core"
   project_id          = module.project.project_id
   ax_region           = var.ax_region
   apigee_instances    = var.apigee_instances
@@ -72,7 +72,7 @@ module "apigee-x-core" {
 
 module "apigee-x-bridge-mig" {
   for_each    = var.apigee_instances
-  source      = "../../modules/apigee-x-bridge-mig"
+  source      = "github.com/apigee/terraform-modules//modules/apigee-x-coremodules/apigee-x-bridge-mig"
   project_id  = module.project.project_id
   network     = module.vpc.network.id
   subnet      = module.vpc.subnet_self_links[local.subnet_region_name[each.value.region]]
@@ -81,7 +81,7 @@ module "apigee-x-bridge-mig" {
 }
 
 module "mig-l7xlb" {
-  source          = "../../modules/mig-l7xlb"
+  source          = "github.com/apigee/terraform-modules//modules/apigee-x-coremodules/mig-l7xlb"
   project_id      = module.project.project_id
   name            = "apigee-xlb"
   backend_migs    = [for _, mig in module.apigee-x-bridge-mig : mig.instance_group]
